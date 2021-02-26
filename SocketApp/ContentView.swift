@@ -13,6 +13,8 @@ final class Service: ObservableObject {
     
     @Published var messages = [String]()
     
+    
+    
     init() {
         let socket = manager.defaultSocket
         socket.on(clientEvent: .connect) { (data, ack) in
@@ -33,8 +35,11 @@ final class Service: ObservableObject {
     }
 }
 
+
 struct ContentView: View {
     @ObservedObject var service = Service()
+    
+    @State var message: String = ""
     
     var body: some View {
         VStack {
@@ -45,6 +50,17 @@ struct ContentView: View {
             }
             Spacer()
         }
+        HStack(alignment: .center) {
+            Text("Message:")
+                .font(.callout)
+                .bold()
+            TextField("Enter message", text: $message)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            Button("Send") {
+                self.service.messages.append(message)
+                print(service.messages)
+            }
+        }.padding()
     }
 }
 
