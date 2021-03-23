@@ -15,6 +15,7 @@ final class Service: ObservableObject {
     
     
     
+    
     init() {
         let socket = manager.defaultSocket
         socket.on(clientEvent: .connect) { (data, ack) in
